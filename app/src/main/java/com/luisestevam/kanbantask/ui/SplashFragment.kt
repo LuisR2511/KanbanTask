@@ -12,6 +12,7 @@ class SplashFragment : Fragment() {
 
     private var _binding: FragmentSplashBinding? = null
     private val binding get() = _binding!!
+    private val nome:String = "luis"
 
     override fun onCreateView(
         inflater: LayoutInflater,

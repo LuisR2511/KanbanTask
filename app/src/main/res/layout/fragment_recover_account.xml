@@ -4,10 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.auth.RegisterFragment"
-    android:background="@color/color_default"
-    android:fillViewport="true">
-    <!-- TODO: Update blank fragment layout -->
+    android:fillViewport="true"
+    tools:context=".ui.auth.RecoverAccountFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,21 +21,30 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Criar Conta"
+                android:text="Recuperar Conta"
                 android:textColor="@color/white"
                 android:layout_gravity="center_horizontal"/>
         </com.google.android.material.appbar.MaterialToolbar>
 
-    <LinearLayout
+        <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginHorizontal="25dp">
             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textviewMensagem"
+                android:text="Informe seu e-mail de cadastro para receber \n um link para alteração de senha."
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:layout_marginTop="24dp"/>
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="E-mail"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/white"
                 />
             <EditText
@@ -48,20 +55,7 @@
                 android:padding="10dp"
                 android:layout_marginTop="4dp"
                 android:background="@drawable/bg_edit_text"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Senha"
-                android:textColor="@color/white"
-                android:layout_marginTop="16dp"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:inputType="textPassword"
-                android:hint="Digite sua senha"
-                android:padding="10dp"
-                android:layout_marginTop="4dp"
-                android:background="@drawable/bg_edit_text"/>
+
             <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,4 +84,5 @@
 
         </LinearLayout>
     </LinearLayout>
+
 </ScrollView>

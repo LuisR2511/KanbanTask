@@ -15,13 +15,13 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -29,6 +29,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListener() {
+        binding.buttonLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_global_homeFragment)
+        }
+
         binding.btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
@@ -37,7 +41,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_recoverAccountFragment)
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

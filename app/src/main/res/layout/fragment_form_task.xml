@@ -7,107 +7,128 @@
     android:fillViewport="true"
     android:padding="20dp"
     tools:context=".ui.FormTaskFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_back"
+        android:paddingTop="40dp" >
 
         <TextView
-            android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Descrição"
+            android:text="Nova tarefa"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:id="@+id/editTextDescricao"
+    </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@drawable/bg_edit_text"
-            android:hint="Informe sua nova tarefa"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-        <TextView
-            android:id="@+id/textViewStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Status"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextDescricao" />
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:id="@+id/radioGroup"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewStatus">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Descrição"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioButton
-                android:layout_width="88dp"
+            <EditText
+                android:id="@+id/editTextDescricao"
+                android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:id="@+id/rbTodo"
-                android:text="A Fazer"
-                android:checked="true"
-                android:theme="@style/MyRadioButton"
-                android:textColor="@color/white"/>
+                android:background="@drawable/bg_edit_text"
+                android:hint="Informe sua nova tarefa"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+            <TextView
+                android:id="@+id/textViewStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Status"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDescricao" />
 
-            <RadioButton
-                android:layout_width="88dp"
-                android:layout_height="48dp"
-                android:buttonTint="@color/black"
-                android:id="@+id/rbDoing"
-                android:text="Fazendo"
-                android:theme="@style/MyRadioButton"
-                android:textColor="@color/white"/>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/radioGroup"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewStatus">
 
-            <RadioButton
-                android:layout_width="88dp"
-                android:layout_height="48dp"
-                android:buttonTint="@color/black"
-                android:id="@+id/rbDone"
-                android:text="Feita"
-                android:theme="@style/MyRadioButton"
-                android:textColor="@color/white"/>
+                <RadioButton
+                    android:layout_width="88dp"
+                    android:layout_height="48dp"
+                    android:id="@+id/rbTodo"
+                    android:text="A Fazer"
+                    android:checked="true"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/white"/>
 
-        </RadioGroup>
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/bg_btn"
-            android:text="Salvar"
-            android:textAllCaps="false"
-            android:textColor="@color/color_default"
-            app:backgroundTint="@null"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="221dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center"
-            android:indeterminateTint="@color/white"
-            android:visibility="invisible"
-            tools:layout_editor_absoluteX="152dp"
-            tools:layout_editor_absoluteY="278dp"
-            tools:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
+                <RadioButton
+                    android:layout_width="88dp"
+                    android:layout_height="48dp"
+                    android:buttonTint="@color/black"
+                    android:id="@+id/rbDoing"
+                    android:text="Fazendo"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/white"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <RadioButton
+                    android:layout_width="88dp"
+                    android:layout_height="48dp"
+                    android:buttonTint="@color/black"
+                    android:id="@+id/rbDone"
+                    android:text="Feita"
+                    android:theme="@style/MyRadioButton"
+                    android:textColor="@color/white"/>
+
+            </RadioGroup>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_btn"
+                android:text="Salvar"
+                android:textAllCaps="false"
+                android:textColor="@color/color_default"
+                app:backgroundTint="@null"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="221dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white"
+                android:visibility="invisible"
+                tools:layout_editor_absoluteX="152dp"
+                tools:layout_editor_absoluteY="278dp"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buttonSave" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </ScrollView>

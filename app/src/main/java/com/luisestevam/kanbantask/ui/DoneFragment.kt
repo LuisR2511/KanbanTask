@@ -32,19 +32,21 @@ class DoneFragment : Fragment() {
         initRecyclerView(getTask())
     }
     private fun initRecyclerView(taskList: List<Task>) {
-        taskAdapter = TaskAdapter(taskList)
+        taskAdapter = TaskAdapter(requireContext(), taskList)
         binding.recyclerViewTask.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTask.setHasFixedSize(true)
 
         binding.recyclerViewTask.adapter = taskAdapter
     }
     private fun getTask() = listOf(
-        Task("0", "Criar nova tela do app", Status.TODO),
-        Task("0", "Validar informações na tela de login", Status.TODO),
-        Task("0", "Adicionar nova funcionalidade no app", Status.TODO),
-        Task("0", "Salvar token localmente", Status.TODO),
-        Task("0", "Criar funcionalidade de logout no app", Status.TODO),
+        Task("12", "Configurar tema principal do app", Status.DONE),
+        Task("13", "Criar tela de splash", Status.DONE),
+        Task("14", "Implementar navegação entre fragments", Status.DONE),
+        Task("15", "Desenvolver tela de recuperação de senha", Status.DONE),
+        Task("16", "Adicionar ícones personalizados", Status.DONE),
     )
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

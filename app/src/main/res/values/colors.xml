@@ -7,5 +7,7 @@
     <color name="green">#4CAF50</color>
     <color name="color_delete">#FF4C3B</color>
     <color name="color_details">#049DD5</color>
+    <color name="color_status_todo">#FF841A</color>
+    <color name="color_status_done">#04D5C1</color>
 
 </resources>

@@ -31,19 +31,21 @@ class DoingFragment : Fragment() {
         initRecyclerView(getTask())
     }
     private fun initRecyclerView(taskList: List<Task>) {
-        taskAdapter = TaskAdapter(taskList)
+        taskAdapter = TaskAdapter(requireContext(), taskList)
         binding.recyclerViewTask.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerViewTask.setHasFixedSize(true)
 
         binding.recyclerViewTask.adapter = taskAdapter
     }
     private fun getTask() = listOf(
-        Task("0", "Criar nova tela do app", Status.TODO),
-        Task("0", "Validar informações na tela de login", Status.TODO),
-        Task("0", "Adicionar nova funcionalidade no app", Status.TODO),
-        Task("0", "Salvar token localmente", Status.TODO),
-        Task("0", "Criar funcionalidade de logout no app", Status.TODO),
+        Task("7", "Implementar integração com API externa", Status.DOING),
+        Task("8", "Refatorar layout da tela de cadastro", Status.DOING),
+        Task("9", "Corrigir bug de validação de e-mail", Status.DOING),
+        Task("10", "Ajustar responsividade no tablet", Status.DOING),
+        Task("11", "Revisar fluxo de autenticação", Status.DOING),
     )
+
+
 
 
     override fun onDestroyView() {

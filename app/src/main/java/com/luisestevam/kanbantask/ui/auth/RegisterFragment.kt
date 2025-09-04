@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.luisestevam.kanbantask.R
 import com.luisestevam.kanbantask.databinding.FragmentRegisterBinding
 import com.luisestevam.kanbantask.util.initToolbar
+import com.luisestevam.kanbantask.util.showBottomSheet
 
 class RegisterFragment : Fragment() {
 
@@ -43,10 +44,10 @@ class RegisterFragment : Fragment() {
             if (senha.isNotBlank()) {
                 Toast.makeText(requireContext(), "Tudo OK!", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Preencha uma senha!", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.password_empty_register_fragment)
             }
         } else {
-            Toast.makeText(requireContext(), "Preencha um email válido!", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.email_empty_register_fragment)
         }
     }
     override fun onDestroyView() {

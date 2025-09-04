@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.luisestevam.kanbantask.databinding.FragmentLoginBinding
 import com.luisestevam.kanbantask.R
+import com.luisestevam.kanbantask.util.showBottomSheet
 
 class LoginFragment : Fragment() {
 
@@ -51,10 +52,10 @@ class LoginFragment : Fragment() {
                 //Comentário temporário somente para testar a validação dos dados
                 findNavController().navigate(R.id.action_global_homeFragment)
             } else {
-                Toast.makeText(requireContext(), "Preencha a senha!", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.password_empty)
             }
         } else {
-            Toast.makeText(requireContext(), "Preencha seu email!", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.email_empty)
         }
     }
 

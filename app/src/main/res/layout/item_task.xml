@@ -96,6 +96,21 @@
                 app:layout_constraintStart_toEndOf="@+id/buttonEditar"
                 app:layout_constraintTop_toTopOf="@+id/buttonEditar" />
 
+            <ImageButton
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="112dp"
+                android:id="@+id/buttonForward"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_forward"
+                app:layout_constraintBottom_toBottomOf="@+id/buttonEditar"
+                app:layout_constraintEnd_toEndOf="@+id/constraintlayout2"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/buttonDetails"
+                app:layout_constraintTop_toTopOf="@+id/buttonEditar"
+                android:contentDescription="Proximo"
+                app:tint="@color/color_default" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>

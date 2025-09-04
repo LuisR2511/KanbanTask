@@ -5,17 +5,17 @@
     <!-- Status task -->
     <string name="status_task_todo">A fazer</string>
     <string name="status_task_doing">Fazendo</string>
-    <string name="status_task_done">Feitas</string>
+    <string name="status_task_done">Feita</string>
     <string name="hint_edit_email">Digite seu e-mail</string>
     <string name="hint_edit_password">Digite sua senha</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="text_title_warning">Atenção</string>
     <string name="text_button_warning">Entendi</string>
-    <string name="email_text">E-mail!</string>
-    <string name="password_text">Senha!</string>
+    <string name="password_empty">Preencha a senha!</string>
+    <string name="password_text">Senha</string>
     <string name="email_empty">Preencha seu e-mail!</string>
-    <string name="email1_text">E-mail</string>
+    <string name="email_text">E-mail</string>
 
     <!--Login Fragment -->
     <string name="text_title_login_fragment">Login</string>
@@ -35,5 +35,10 @@
 
     <!--Form Task Fragment -->
     <string name="description_empty_form_task_fragment">Preencha uma descrição.</string>
+    <string name="text_title_form_task_fragment">Nova tarefa</string>
+    <string name="text_description_form_task_fragment">Descrição</string>
+    <string name="text_status_form_task_fragment">Status</string>
+    <string name="text_button_save_form_task_fragment">Salvar</string>
+
 
 </resources>

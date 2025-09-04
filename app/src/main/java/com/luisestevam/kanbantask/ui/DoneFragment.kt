@@ -31,13 +31,17 @@ class DoneFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView(getTask())    }
-    private fun initRecyclerView(taskList: List<Task>) {
-        taskAdapter = TaskAdapter(requireContext(), taskList) { task, option -> optionSelected(task, option) }
-        binding.recyclerViewTask.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewTask.setHasFixedSize(true)
+        initRecyclerViewTask()
+        getTask()
+    }
+    private fun initRecyclerViewTask() {
+        taskAdapter = TaskAdapter(requireContext()) { task, option -> optionSelected(task, option) }
 
-        binding.recyclerViewTask.adapter = taskAdapter
+        with(binding.recyclerViewTask) {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = taskAdapter
+        }
     }
     private fun optionSelected(task: Task, option: Int) {
         when (option) {
@@ -56,13 +60,18 @@ class DoneFragment : Fragment() {
         }
     }
 
-    private fun getTask() = listOf(
-        Task("12", "Configurar tema principal do app", Status.DONE),
-        Task("13", "Criar tela de splash", Status.DONE),
-        Task("14", "Implementar navegação entre fragments", Status.DONE),
-        Task("15", "Desenvolver tela de recuperação de senha", Status.DONE),
-        Task("16", "Adicionar ícones personalizados", Status.DONE),
-    )
+    private fun getTask() {
+        val taskList = listOf(
+            Task("12", "Configurar tema principal do app", Status.DONE),
+            Task("13", "Criar tela de splash", Status.DONE),
+            Task("14", "Implementar navegação entre fragments", Status.DONE),
+            Task("15", "Desenvolver tela de recuperação de senha", Status.DONE),
+            Task("16", "Adicionar ícones personalizados", Status.DONE),
+        )
+
+        taskAdapter.submitList(taskList)
+    }
+
 
 
 

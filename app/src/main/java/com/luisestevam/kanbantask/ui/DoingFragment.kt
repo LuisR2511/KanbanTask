@@ -30,13 +30,17 @@ class DoingFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView(getTask())    }
-    private fun initRecyclerView(taskList: List<Task>) {
-        taskAdapter = TaskAdapter(requireContext(), taskList) { task, option -> optionSelected(task, option) }
-        binding.recyclerViewTask.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerViewTask.setHasFixedSize(true)
+        initRecyclerViewTask()
+        getTask()
+    }
+    private fun initRecyclerViewTask() {
+        taskAdapter = TaskAdapter(requireContext()) { task, option -> optionSelected(task, option) }
 
-        binding.recyclerViewTask.adapter = taskAdapter
+        with(binding.recyclerViewTask) {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = taskAdapter
+        }
     }
     private fun optionSelected(task: Task, option: Int) {
         when (option) {
@@ -58,13 +62,18 @@ class DoingFragment : Fragment() {
         }
     }
 
-    private fun getTask() = listOf(
-        Task("7", "Implementar integração com API externa", Status.DOING),
-        Task("8", "Refatorar layout da tela de cadastro", Status.DOING),
-        Task("9", "Corrigir bug de validação de e-mail", Status.DOING),
-        Task("10", "Ajustar responsividade no tablet", Status.DOING),
-        Task("11", "Revisar fluxo de autenticação", Status.DOING),
-    )
+    private fun getTask() {
+        val taskList = listOf(
+            Task("7", "Implementar integração com API externa", Status.DOING),
+            Task("8", "Refatorar layout da tela de cadastro", Status.DOING),
+            Task("9", "Corrigir bug de validação de e-mail", Status.DOING),
+            Task("10", "Ajustar responsividade no tablet", Status.DOING),
+            Task("11", "Revisar fluxo de autenticação", Status.DOING),
+        )
+
+        taskAdapter.submitList(taskList)
+    }
+
 
 
 

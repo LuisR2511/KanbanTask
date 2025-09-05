@@ -31,7 +31,6 @@ fun Fragment.showBottomSheet(
     binding.textViewMessage.text = message
     binding.buttonOk.text = getText(titleButton ?: R.string.text_button_warning)
     binding.buttonOk.setOnClickListener {
-        // Quando o botão buttonOk é clicado: o código executa o que foi definido no onClick. Depois, fecha o Bottom Sheet.
         onClick() //callback
         bottomSheetDialog.dismiss()
     }

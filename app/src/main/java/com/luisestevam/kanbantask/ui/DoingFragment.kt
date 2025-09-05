@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.luisestevam.kanbantask.R
 import com.luisestevam.kanbantask.data.model.Status
 import com.luisestevam.kanbantask.data.model.Task
 import com.luisestevam.kanbantask.databinding.FragmentDoingBinding

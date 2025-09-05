@@ -18,11 +18,11 @@ class TaskAdapter(
 ) : ListAdapter<Task, TaskAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
-        val SELECT_BACK: Int = 1
-        val SELECT_REMOVER: Int = 2
-        val SELECT_EDIT: Int = 3
-        val SELECT_DETAILS: Int = 4
-        val SELECT_NEXT: Int = 5
+        const val SELECT_BACK: Int = 1
+        const val SELECT_REMOVER: Int = 2
+        const val SELECT_EDIT: Int = 3
+        const val SELECT_DETAILS: Int = 4
+        const val SELECT_NEXT: Int = 5
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Task>() {
             override fun areItemsTheSame(
                 oldItem: Task,
@@ -58,7 +58,6 @@ class TaskAdapter(
             }
 
             Status.DOING -> {
-                //configurar a cor diferente para as setas
                 holder.binding.buttonBack.setColorFilter(ContextCompat.getColor(context, R.color.color_status_todo))
                 holder.binding.buttonForward.setColorFilter(ContextCompat.getColor(context, R.color.color_status_done))
 

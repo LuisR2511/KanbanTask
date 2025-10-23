@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.luisestevam.kanbantask.databinding.FragmentLoginBinding
 import com.luisestevam.kanbantask.R
 import com.luisestevam.kanbantask.util.showBottomSheet
@@ -14,6 +17,8 @@ class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +30,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        auth= FirebaseAuth.getInstance()
 
         initListener()
     }
@@ -54,6 +60,22 @@ class LoginFragment : Fragment() {
             }
         } else {
             showBottomSheet(message = getString(R.string.email_empty))
+        }
+    }
+    private fun loginUser(email: String,senha: String){
+        try {
+            auth.signInWithEmailAndPassword(email,senha)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        findNavController().navigate(R.id.action_global_homeFragment)
+                    }else{
+                        binding.progressBar.isVisible=false
+                        Toast.makeText(requireContext(),task.exception?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+        }catch(e: Exception){
+            Toast.makeText(requireContext(),e.message.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

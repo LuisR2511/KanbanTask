@@ -60,7 +60,7 @@ class FormTaskFragment : Fragment() {
             .child(auth.currentUser?.uid ?:"")
             .child(task.id).setValue(task).addOnCompleteListener { result ->
                 if (result.isSuccessful){
-                    Toast.makeText(requireContext(), R.string.text_save_sucess_task_fragment )
+                    Toast.makeText(requireContext(), R.string.text_save_sucess_task_fragment, Toast.LENGTH_SHORT).show()
                     if (newTask){
                         findNavController().popBackStack()
                     }else{
@@ -84,7 +84,7 @@ class FormTaskFragment : Fragment() {
     private fun validateData() {
         val description = binding.editTextDescricao.text.toString().trim()
         if (description.isNotBlank()) {
-            if (newTask) task = Task(0,"")
+            if (newTask) task = Task("0","")
             task.id=reference.database.reference.push().key ?:""
             task.description=description
             task.status=status

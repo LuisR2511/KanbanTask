@@ -28,29 +28,32 @@ class RegisterFragment : Fragment() {
         return binding.root
     }
 
-    private fun registerUser(email: String, password: String){
+    private fun registerUser(email: String, password: String) {
         try {
-            val auth= FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
-                    if (task.isSuccessful){
-                        //mensagem sucesso
+                    if (task.isSuccessful) {
+                        // Cadastro feito com sucesso
+                        val user = auth.currentUser
+                        Toast.makeText(requireContext(), "Conta criada com sucesso!", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_global_homeFragment)
-                    }else{
-                        //mensagem de erro
-                        Toast.makeText(requireContext(),task.exception?.message , Toast.LENGTH_SHORT).show()
-
+                    } else {
+                        // Falha no cadastro
+                        binding.progressBar.isVisible = false
+                        Toast.makeText(requireContext(), "Falha na autenticação: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
-        }catch (e: Exception){
-            Toast.makeText(requireContext(),e.message.toString(), Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            binding.progressBar.isVisible = false
+            Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_SHORT).show()
         }
-
-
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
+        auth = FirebaseAuth.getInstance()
+
         initListener()
     }
 

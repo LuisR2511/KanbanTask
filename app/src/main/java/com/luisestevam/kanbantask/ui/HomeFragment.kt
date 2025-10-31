@@ -30,22 +30,25 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth= FirebaseAuth.getInstance()
+        initListeners()
         initTabs()
 
     }
-    private fun initListeners(){
+    private fun initListeners() {
         binding.btnLogout.setOnClickListener {
             showBottomSheet(
-                titleButton = R.string.exit,
-                titleDialog = R.string.Encerrarsessao,
-                message="Deseja realmente sair do sistema?",
-                onClick={
+                titleButton = R.string.text_button_dialog_confirm_logout,
+                titleDialog = R.string.text_title_dialog_confirma_logout,
+                message = getString(R.string.text_message_dialog_confirm_logout),
+                onClick = {
                     auth.signOut()
                     findNavController().navigate(R.id.action_homeFragment_to_authentication)
                 }
             )
         }
     }
+
+
 
     private fun initTabs() {
         val pageAdapter = ViewPagerAdapter(requireActivity())

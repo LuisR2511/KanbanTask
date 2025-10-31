@@ -17,6 +17,7 @@
     <string name="email_empty">Preencha seu e-mail!</string>
     <string name="email_text">E-mail</string>
 
+
     <!--Login Fragment -->
     <string name="text_title_login_fragment">Login</string>
     <string name="text_button_register_login_fragment">Criar conta</string>
@@ -49,8 +50,11 @@
 
     <string name="exit">Sair</string>
     <string name="Encerrarsessao">Encerrar sessão</string>
-    <string name="error_generic">erro no sistema</string>
+    <string name="error_generic">Ocorreu um erro! Por favor Tente novamente mais tarde.</string>
     <string name="text_save_sucess_task_fragment">Tarefa criada!</string>
+
+    <string name="description_empty_fome_task_fragment">Preencha uma descrição!</string>
+    <string name="text_save_sucess_form_task_fragment">Tarefa salva com sucesso</string>
 
 
 </resources>

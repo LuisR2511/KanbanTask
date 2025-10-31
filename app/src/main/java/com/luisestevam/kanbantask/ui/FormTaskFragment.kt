@@ -21,13 +21,15 @@ import com.luisestevam.kanbantask.databinding.FragmentFormTaskBinding
 import com.luisestevam.kanbantask.util.initToolbar
 import com.luisestevam.kanbantask.util.showBottomSheet
 
+
 class FormTaskFragment : Fragment() {
 
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
-    private lateinit var task: com.luisestevam.kanbantask.data.model.Task
-    private var newTask: Boolean=true
-    private var status: Status= Status.TODO
+    //alocação de memória para variável e instanciar mais tarde
+    private lateinit var task: Task
+    private var newTask: Boolean = true
+    private var status: Status = Status.TODO
 
     //Banco de Dados
     private lateinit var reference: DatabaseReference
@@ -75,19 +77,30 @@ class FormTaskFragment : Fragment() {
 
     }
 
-    private fun initListener() {
+    private fun initListener(){
         binding.buttonSave.setOnClickListener {
             validateData()
+        }
+
+        //Evento que monitora a mudança de escolha do radioGroup
+        binding.radioGroup.setOnCheckedChangeListener { _, id -> status =
+            when(id) {
+                R.id.rbTodo -> Status.TODO
+                R.id.rbDoing -> Status.DOING
+                else -> Status.DONE
+            }
         }
     }
 
     private fun validateData() {
         val description = binding.editTextDescricao.text.toString().trim()
         if (description.isNotBlank()) {
+            binding.progressBar.isVisible=true
             if (newTask) task = Task("0","")
             task.id=reference.database.reference.push().key ?:""
             task.description=description
             task.status=status
+            saveTask()
         } else {
             showBottomSheet(message = getString(R.string.description_empty_form_task_fragment))
         }

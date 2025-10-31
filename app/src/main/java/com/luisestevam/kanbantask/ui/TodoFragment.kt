@@ -8,6 +8,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.database
 import com.luisestevam.kanbantask.R
 import com.luisestevam.kanbantask.data.model.Status
 import com.luisestevam.kanbantask.data.model.Task
@@ -18,6 +26,8 @@ class TodoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
     private val binding get() = _binding!!
     private lateinit var taskAdapter: TaskAdapter
+    private lateinit var reference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
 
     override fun onCreateView(
@@ -30,6 +40,8 @@ class TodoFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        reference = Firebase.database.reference
+        auth = Firebase.auth
         initListeners()
         initRecyclerViewTask()
         getTask()
@@ -66,18 +78,38 @@ class TodoFragment : Fragment() {
         }
     }
     private fun getTask() {
-        val taskList = listOf(
-            Task("0", "Criar nova tela do app", Status.TODO),
-            Task("1", "Validar informações na tela de login", Status.TODO),
-            Task("2", "Adicionar nova funcionalidade no app", Status.TODO),
-            Task("3", "Salvar token localmente", Status.TODO),
-            Task("4", "Criar funcionalidade de logout no app", Status.TODO),
-            Task("5", "Implementar notificações push", Status.TODO),
-            Task("6", "Configurar permissões de câmera", Status.TODO),
-        )
+        reference
+            .child("task")
+            .child(auth.currentUser?.uid ?: "")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val taskList = mutableListOf<Task>()
 
-        taskAdapter.submitList(taskList)
+                    for (ds in snapshot.children) {
+                        val map = ds.value as? Map<*, *> ?: continue
+
+                        val id = map["id"] as? String ?: ""
+                        val description = map["description"] as? String ?: ""
+                        val statusString = map["status"] as? String ?: "TODO"
+
+                        val status = try {
+                            Status.valueOf(statusString) // converte String → Enum
+                        } catch (e: IllegalArgumentException) {
+                            Status.TODO
+                        }
+
+                        taskList.add(Task(id, description, status))
+                    }
+
+                    taskAdapter.submitList(taskList.reversed())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
+
 
 
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.Firebase
@@ -21,6 +22,7 @@ import com.luisestevam.kanbantask.data.model.Status
 import com.luisestevam.kanbantask.data.model.Task
 import com.luisestevam.kanbantask.databinding.FragmentTodoBinding
 import com.luisestevam.kanbantask.ui.adapter.TaskAdapter
+import com.luisestevam.kanbantask.util.showBottomSheet
 
 class TodoFragment : Fragment() {
     private var _binding: FragmentTodoBinding? = null
@@ -38,6 +40,7 @@ class TodoFragment : Fragment() {
         _binding = FragmentTodoBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         reference = Firebase.database.reference
@@ -52,6 +55,7 @@ class TodoFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)
         }
     }
+
     private fun initRecyclerViewTask() {
         taskAdapter = TaskAdapter(requireContext()) { task, option -> optionSelected(task, option) }
 
@@ -61,11 +65,18 @@ class TodoFragment : Fragment() {
             adapter = taskAdapter
         }
     }
+
     private fun optionSelected(task: Task, option: Int) {
         when (option) {
             TaskAdapter.SELECT_REMOVER -> {
-                Toast.makeText(requireContext(), "Removendo ${task.description}", Toast.LENGTH_SHORT).show()
-            }
+                showBottomSheet(
+                    titleDialog = R.string.text_title_dialog_delete,
+                    message = getString( R.string.text_message_dialog_delete),
+                    titleButton = R.string.text_button_dialog_confirm,
+                    onClick = {
+                        deleteTask(task)
+                    }
+                )            }
             TaskAdapter.SELECT_EDIT -> {
                 Toast.makeText(requireContext(), "Editando ${task.description}", Toast.LENGTH_SHORT).show()
             }
@@ -77,6 +88,7 @@ class TodoFragment : Fragment() {
             }
         }
     }
+
     private fun getTask() {
         reference
             .child("task")
@@ -100,15 +112,43 @@ class TodoFragment : Fragment() {
 
                         taskList.add(Task(id, description, status))
                     }
-
+                    binding.progressBar.isVisible = false
+                    listEmpty(taskList)
                     taskAdapter.submitList(taskList.reversed())
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
     }
+    private fun deleteTask(task: Task){
+        reference
+            .child( "task")
+            .child( auth.currentUser?.uid ?: "")
+            .child( task.id)
+            .removeValue().addOnCompleteListener { result ->
+
+                if(result.isSuccessful){
+                    Toast.makeText(requireContext(),  R.string.text_delete_sucess_task,  Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(requireContext(),  R.string.error_generic,  Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun listEmpty(taskList: List<Task>){
+        // O 'if' retorna uma String
+        binding.textInfo.text = if (taskList.isEmpty()){
+            getString(R.string.text_list_task_empty)
+            // O 'else' TAMBÉM retorna uma String (vazia)
+        }else{
+            "" // <--- CORREÇÃO AQUI
+        }
+    }
+
+
 
 
 

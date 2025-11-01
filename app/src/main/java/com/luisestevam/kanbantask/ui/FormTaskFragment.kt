@@ -68,6 +68,7 @@ class FormTaskFragment : Fragment() {
         args.task.let {
             if (it != null){
                 this.task = it
+                configTask()
             }
         }
     }
@@ -87,27 +88,27 @@ class FormTaskFragment : Fragment() {
         binding.radioGroup.check(id)
     }
 
-    private fun saveTask(){
+    private fun saveTask() {
         reference
             .child("task")
-            .child(auth.currentUser?.uid ?:"")
-            .child(task.id).setValue(task).addOnCompleteListener { result ->
-                if (result.isSuccessful){
-                    Toast.makeText(requireContext(), R.string.text_save_sucess_task_fragment, Toast.LENGTH_SHORT).show()
-                    if (newTask){
-                        findNavController().popBackStack()
-                    }else{
-                        viewModel.setUpdateTask(task)
-                        binding.progressBar.isVisible=false
-                    }
-                }else{
-                    binding.progressBar.isVisible=false
+            .child(auth.currentUser?.uid ?: "")
+            .child(task.id)
+            .setValue(task)
+            .addOnCompleteListener { result ->
+                binding.progressBar.isVisible = false
+                if (result.isSuccessful) {
+                    Toast.makeText(requireContext(),
+                        R.string.text_save_sucess_task_fragment,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    findNavController().popBackStack()
+                } else {
                     showBottomSheet(message = getString(R.string.error_generic))
                 }
             }
-
-
     }
+
 
     private fun initListener(){
         binding.buttonSave.setOnClickListener {
@@ -127,18 +128,22 @@ class FormTaskFragment : Fragment() {
     private fun validateData() {
         val description = binding.editTextDescricao.text.toString().trim()
         if (description.isNotBlank()) {
-            binding.progressBar.isVisible=true
-            if(newTask){
+            binding.progressBar.isVisible = true
+
+            if (newTask) {
                 task = Task("0","")
-                task.id = reference.database.reference.push().key ?: ""
+                task.id = reference.push().key ?: ""
             }
-            task.description=description
-            task.status=status
+
+            task.description = description
+            task.status = status
+
             saveTask()
         } else {
             showBottomSheet(message = getString(R.string.description_empty_form_task_fragment))
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

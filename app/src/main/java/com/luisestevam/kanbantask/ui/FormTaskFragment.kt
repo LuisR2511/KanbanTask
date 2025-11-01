@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -20,6 +22,7 @@ import com.luisestevam.kanbantask.data.model.Task
 import com.luisestevam.kanbantask.databinding.FragmentFormTaskBinding
 import com.luisestevam.kanbantask.util.initToolbar
 import com.luisestevam.kanbantask.util.showBottomSheet
+import kotlin.getValue
 
 
 class FormTaskFragment : Fragment() {
@@ -30,6 +33,11 @@ class FormTaskFragment : Fragment() {
     private lateinit var task: Task
     private var newTask: Boolean = true
     private var status: Status = Status.TODO
+
+    private val args: FormTaskFragmentArgs by navArgs()
+
+    private val viewModel: TaskViewModel by activityViewModels()
+
 
     //Banco de Dados
     private lateinit var reference: DatabaseReference
@@ -52,8 +60,31 @@ class FormTaskFragment : Fragment() {
         //Instanciando o banco de dados e a autenticação
         reference= Firebase.database.reference
         auth= Firebase.auth
+        getArgs()
 
         initListener()
+    }
+    private fun getArgs(){
+        args.task.let {
+            if (it != null){
+                this.task = it
+            }
+        }
+    }
+    private fun configTask(){
+        newTask = false
+        status = task.status
+        binding.textToolbar.text = "Editando..."
+        binding.editTextDescricao.setText(task.description)
+        setStatus()
+    }
+    private fun setStatus(){
+        val id = when (task.status){
+            Status.TODO -> R.id.rbTodo
+            Status.DOING -> R.id.rbDoing
+            else -> R.id.rbDone
+        }
+        binding.radioGroup.check(id)
     }
 
     private fun saveTask(){
@@ -66,6 +97,7 @@ class FormTaskFragment : Fragment() {
                     if (newTask){
                         findNavController().popBackStack()
                     }else{
+                        viewModel.setUpdateTask(task)
                         binding.progressBar.isVisible=false
                     }
                 }else{
@@ -96,8 +128,10 @@ class FormTaskFragment : Fragment() {
         val description = binding.editTextDescricao.text.toString().trim()
         if (description.isNotBlank()) {
             binding.progressBar.isVisible=true
-            if (newTask) task = Task("0","")
-            task.id=reference.database.reference.push().key ?:""
+            if(newTask){
+                task = Task("0","")
+                task.id = reference.database.reference.push().key ?: ""
+            }
             task.description=description
             task.status=status
             saveTask()

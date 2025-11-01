@@ -74,5 +74,9 @@
         <action
             android:id="@+id/action_formTaskFragment_to_authentication"
             app:destination="@id/authentication" />
+        <argument
+            android:name="task"
+            app:argType="com.luisestevam.kanbantask.data.model.Task"
+            app:nullable="true" />
     </fragment>
 </navigation>
